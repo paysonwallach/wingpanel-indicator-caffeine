@@ -28,12 +28,12 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         this.session_settings = new Settings ("org.gnome.desktop.session");
         this.dpms_settings = new Settings ("io.elementary.dpms");
 
-        settings.bind ("ac-type", this, "sleep_settings_ac", GLib.SettingsBindFlags.DEFAULT);
-        settings.bind ("bat-type", this, "sleep_settings_bat", GLib.SettingsBindFlags.DEFAULT);
-        settings.bind ("dim-on-idle", this, "idle_dim", GLib.SettingsBindFlags.DEFAULT);
-        settings.bind ("session-timeout", this, "session_timeout", GLib.SettingsBindFlags.DEFAULT);
-        settings.bind ("standby-time", this, "standby_time", GLib.SettingsBindFlags.DEFAULT);
-        settings.bind ("enabled", this, "enabled", GLib.SettingsBindFlags.DEFAULT);
+        this.settings.bind ("ac-type", this, "sleep_settings_ac", SettingsBindFlags.DEFAULT);
+        this.settings.bind ("bat-type", this, "sleep_settings_bat", SettingsBindFlags.DEFAULT);
+        this.settings.bind ("dim-on-idle", this, "idle_dim", SettingsBindFlags.DEFAULT);
+        this.settings.bind ("session-timeout", this, "session_timeout", SettingsBindFlags.DEFAULT);
+        this.settings.bind ("standby-time", this, "standby_time", SettingsBindFlags.DEFAULT);
+        this.settings.bind ("enabled", this, "enabled", SettingsBindFlags.DEFAULT);
 
         this.visible = true;
     }
