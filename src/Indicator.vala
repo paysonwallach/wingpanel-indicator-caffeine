@@ -1,3 +1,12 @@
+/*
+ * Caffeine
+ *
+ * Copyright © 2020 Payson Wallach
+ *
+ * Released under the terms of the GNU General Public License, version 3
+ * (https://gnu.org/licenses/gpl.html)
+ */
+
 public class Caffeine.Indicator : Wingpanel.Indicator {
     private Wingpanel.Widgets.OverlayIcon icon;
 
