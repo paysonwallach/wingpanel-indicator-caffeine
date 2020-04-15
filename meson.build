@@ -1,10 +1,13 @@
-project('wingpanel-indicator-caffeine', 'vala', 'c', version: '0.1.0')
+project('wingpanel-indicator-caffeine',
+        'vala',
+        'c',
+        version : '0.1.0'
+)
 
 i18n = import('i18n')
 
-add_project_arguments([
-                        '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
-                        '-w'
+add_project_arguments(['-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
+                       '-w'
                       ],
                       language:'c'
 )
@@ -19,7 +22,12 @@ add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), lan
 granite_dep = dependency('granite')
 libnotify_dep = dependency('libnotify')
 libwingpanel_dep = dependency('wingpanel-2.0')
-indicators_dir = libwingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
+indicators_dir = libwingpanel_dep.get_pkgconfig_variable('indicatorsdir',
+  define_variable: [
+    'libdir',
+    libdir
+  ]
+)
 
 shared_module(meson.project_name(),
               'src/Indicator.vala',
