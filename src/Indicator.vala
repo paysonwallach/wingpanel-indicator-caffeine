@@ -57,7 +57,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     construct {
         enabled = false;
         icon = new Gtk.Image.from_icon_name (
-            "caffeine-cup-empty", Gtk.IconSize.LARGE_TOOLBAR);
+            "caffeine-cup-empty-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
 
         icon.button_press_event.connect (on_button_press);
 
@@ -137,11 +137,6 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         session_cancel_button.get_style_context ()
             .add_class ("destructive-action");
-
-        // var session_cancel_button_revealer = new Gtk.Revealer ();
-
-        // session_cancel_button_revealer.set_transition_type (Gtk.RevealerTransitionType.SLIDE_DOWN);
-        // session_cancel_button_revealer.add (session_cancel_button_box);
 
         session_countdown_revealer.set_transition_type (Gtk.RevealerTransitionType.SLIDE_DOWN);
 
@@ -316,7 +311,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_settings.set_uint("idle-delay", session_timeout);
         dpms_settings.set_int("standby-time", standby_time);
 
-        icon.icon_name = "caffeine-cup-empty";
+        icon.icon_name = "caffeine-cup-empty-symbolic";
 
         session_countdown_revealer.set_reveal_child (false);
 
@@ -354,7 +349,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_settings.set_uint("idle-delay", 0);
         dpms_settings.set_int("standby-time", 0);
 
-        icon.icon_name = "caffeine-cup-full";
+        icon.icon_name = "caffeine-cup-full-symbolic";
 
         active_menubutton.set_image_visible (true);
 
