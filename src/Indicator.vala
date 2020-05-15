@@ -23,7 +23,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     private Durations hour_durations = Durations (
         Units.HOURS, { 1, 2, 3, 4, 5, 6, 9, 12, 24 });
 
-    private Gtk.Image icon;
+    private Gtk.Image display_widget;
     private Gtk.Grid menu;
 
     private Gtk.Revealer? opened_submenu;
@@ -56,10 +56,10 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
     construct {
         enabled = false;
-        icon = new Gtk.Image.from_icon_name (
+        display_widget = new Gtk.Image.from_icon_name (
             "caffeine-cup-empty-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
 
-        icon.button_press_event.connect (on_button_press);
+        display_widget.button_press_event.connect (on_button_press);
 
         settings = new Settings ("com.paysonwallach.caffeine");
         power_settings = new Settings ("org.gnome.settings-daemon.plugins.power");
@@ -80,7 +80,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget get_display_widget () {
-        return icon;
+        return display_widget;
     }
 
     public override Gtk.Widget? get_widget () {
@@ -311,7 +311,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_settings.set_uint("idle-delay", session_timeout);
         dpms_settings.set_int("standby-time", standby_time);
 
-        icon.icon_name = "caffeine-cup-empty-symbolic";
+        display_widget.icon_name = "caffeine-cup-empty-symbolic";
 
         session_countdown_revealer.set_reveal_child (false);
 
@@ -349,7 +349,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_settings.set_uint("idle-delay", 0);
         dpms_settings.set_int("standby-time", 0);
 
-        icon.icon_name = "caffeine-cup-full-symbolic";
+        display_widget.icon_name = "caffeine-cup-full-symbolic";
 
         active_menubutton.set_image_visible (true);
 
