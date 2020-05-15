@@ -1,14 +1,12 @@
-foreach i : ['24', '48']
-  install_data(
-    [
-      join_paths('icons', 'caffeine-cup-empty.svg'),
-      join_paths('icons', 'caffeine-cup-full.svg')
-    ],
-    install_dir: join_paths(
-      get_option('datadir'), 'icons', 'hicolor', '@0@x@0@'.format(i), 'status'
-    )
+install_data(
+  [
+    join_paths('icons', 'caffeine-cup-empty-symbolic.svg'),
+    join_paths('icons', 'caffeine-cup-full-symbolic.svg')
+  ],
+  install_dir: join_paths(
+    get_option('datadir'), 'icons', 'hicolor', 'scalable', 'status'
   )
-endforeach
+)
 
 install_data(
   app_id + '.gschema.xml',
