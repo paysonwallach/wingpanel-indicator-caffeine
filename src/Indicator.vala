@@ -102,7 +102,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     }
 
     private void construct_menu () {
-        int index = 1;
+        int index = 3;
 
         menu = new Gtk.Grid ();
         session_countdown_revealer = new Gtk.Revealer ();
@@ -148,6 +148,18 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_countdown_revealer.add (session_countdown_grid);
 
         menu.attach (session_countdown_revealer, 0, 0);
+
+        var new_session_label = new Gtk.Label ("Start a New Session");
+        new_session_label.get_style_context ()
+            .add_class (Granite.STYLE_CLASS_H4_LABEL);
+        new_session_label.halign = Gtk.Align.START;
+        new_session_label.hexpand = true;
+        new_session_label.margin = 10;
+        new_session_label.margin_top = 2;
+        new_session_label.margin_bottom = 2;
+
+        menu.attach (new_session_label, 0, 1);
+        menu.attach (new Wingpanel.Widgets.Separator (), 0, 2);
 
         add_menu_button_with_duration (new InfiniteDuration (), menu, index++);
 
