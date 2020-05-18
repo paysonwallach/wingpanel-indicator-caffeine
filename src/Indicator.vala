@@ -398,6 +398,13 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             error (@"unable to show notification: $(err.message)");
         }
     }
+
+    private File get_state_file () {
+        var paths = Granite.Services.Paths.initialize (Constants.APP_ID, Constants.PKGDATADIR);
+
+        return File.new_build_filename (
+            paths.user_cache_folder ().get_path (), @"last-state-$(Config.DATA_VERSION)")
+    }
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
