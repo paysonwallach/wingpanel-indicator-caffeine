@@ -1,0 +1,6 @@
+namespace Config {
+    public const string APP_ID = @APP_ID@;
+    public const string APP_NAME = @APP_NAME@;
+    public const string PKGDATADIR= @PKGDATADIR@;
+    public const int DATA_VERSION = 0;
+}
