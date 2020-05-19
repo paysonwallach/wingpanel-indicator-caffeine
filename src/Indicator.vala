@@ -144,6 +144,11 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         session_cancel_button.get_style_context ()
             .add_class ("destructive-action");
+        session_cancel_button.clicked.connect (() => {
+            if (countdown_timer_controller != null)
+                countdown_timer_controller.cancel ();
+            disable ();
+        });
 
         session_countdown_revealer.set_transition_type (Gtk.RevealerTransitionType.SLIDE_DOWN);
 
@@ -272,7 +277,8 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         }
 
         if (enabled) {
-            session_cancel_button.clicked ();
+            countdown_timer_controller.cancel ();
+            disable (false);
         }
 
         if (!start_new_session) {
@@ -311,11 +317,6 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
                 disable ();
             });
             countdown_timer_controller.activate ();
-
-            session_cancel_button.clicked.connect (() => {
-                countdown_timer_controller.cancel ();
-                disable (false);
-            });
 
             session_countdown_timer_label.set_markup (
                 @"<small>Time remaining: $(duration.time_remaining_string (countdown_timer_controller.duration - 1))</small>"
