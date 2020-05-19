@@ -25,6 +25,8 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
     private Gtk.Image display_widget;
     private Gtk.Grid menu;
+    private Gee.ArrayList<Gtk.Revealer> submenus;
+    private Gee.ArrayList<MenuButton> menubuttons;
 
     private Gtk.Revealer? opened_submenu;
     private Gtk.Revealer? active_menubutton_parent;
@@ -73,10 +75,15 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         settings.bind ("standby-time", this, "standby_time", SettingsBindFlags.DEFAULT);
         settings.bind ("enabled", this, "enabled", SettingsBindFlags.DEFAULT);
 
+        menubuttons = new Gee.ArrayList<MenuButton> ();
+        submenus = new Gee.ArrayList<Gtk.Revealer> ();
+
         construct_menu ();
         Notify.init (Config.APP_NAME);
 
         visible = true;
+
+        restore_state ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -213,6 +220,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             submenu_container.attach (revealer, 0, 1);
 
             menu.attach (submenu_container, 0, index++);
+            submenus.add (revealer);
         }
     }
 
@@ -251,6 +259,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         button.set_image_visible (false);
 
         menu.attach (button, 0, index);
+        menubuttons.add (button);
     }
 
     private void on_menu_button_clicked (MenuButton button, Duration duration) {
@@ -272,17 +281,17 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         active_menubutton = button;
 
-        enable ();
+        start_session_with_duration (duration);
         show_notification (
             "Caffeine enabled",
             duration.notification_string ()
         );
+    }
+
+    private void start_session_with_duration (Duration duration, bool resume = false) {
+        enable ();
 
         if (duration.unit == Units.INDEFINITE) {
-            session_cancel_button.clicked.connect (() => {
-                disable (false);
-            });
-
             session_countdown_timer_label.set_markup (
                 @"<small>$(duration.time_remaining_string ())</small>"
             );
@@ -290,12 +299,13 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             if (countdown_timer_controller == null)
                 countdown_timer_controller = new CountdownTimerController ();
 
-            countdown_timer_controller.duration = duration.quantity * duration.unit.to_seconds ();
+            countdown_timer_controller.duration = duration.quantity * (resume ? 1 : duration.unit.to_seconds ());
 
             countdown_timer_controller.active_changed.connect (() => {
                 session_countdown_timer_label.set_markup (
                     @"<small>Time remaining: $(duration.time_remaining_string (countdown_timer_controller.get_time_remaining ()))</small>"
                 );
+                save_state ();
             });
             countdown_timer_controller.completed.connect (() => {
                 disable ();
@@ -344,6 +354,8 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             );
 
         enabled = false;
+
+        save_state ();
     }
 
     private void enable () {
@@ -404,6 +416,104 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         return File.new_build_filename (
             paths.user_cache_folder ().get_path (), @"last-state-$(Config.DATA_VERSION)")
+        );
+    }
+
+    private void save_state () {
+        File state_file = get_state_file ();
+
+        var generator = new Json.Generator ();
+        var root = new Json.Node (Json.NodeType.OBJECT);
+        var root_object = new Json.Object ();
+
+        root.set_object (root_object);
+        generator.set_root (root);
+        root_object.set_boolean_member ("enabled", enabled);
+
+        if (enabled) {
+            var ui_state_object = new Json.Object ();
+
+            ui_state_object.set_int_member (
+                "active-submenu",
+                active_menubutton_parent == null ? -1 : submenus.index_of (active_menubutton_parent)
+            );
+            ui_state_object.set_int_member (
+                "active-item",
+                active_menubutton == null ? -1 : menubuttons.index_of (active_menubutton)
+            );
+
+            root_object.set_object_member (
+                "ui-state",
+                ui_state_object
+            );
+            root_object.set_object_member (
+                "countdown-state",
+                countdown_timer_controller.serialize ()
+            );
+        }
+
+        try {
+            OutputStream state_stream = state_file.replace (null, false, FileCreateFlags.NONE);
+            generator.to_stream (state_stream);
+        } catch (Error err) {
+            warning (@"error writing state to file: $(err.message)");
+        }
+    }
+
+    private void restore_state () {
+        File state_file = get_state_file ();
+
+        if (!state_file.query_exists ()) {
+            return;
+        }
+
+        Json.Parser parser = new Json.Parser ();
+
+        try {
+            InputStream state_stream = state_file.read ();
+
+            parser.load_from_stream (state_stream);
+        } catch (Error err) {
+            warning (@"error reading from state file: $(err.message)");
+        }
+
+        Json.Node? root = parser.get_root ();
+
+        if (root == null) {
+            return;
+        }
+
+        Json.Object root_object = root.get_object ();
+
+        if (!root_object.get_boolean_member ("enabled"))
+            return;
+
+        Json.Object ui_state_object = root_object.get_object_member ("ui-state");
+
+        var active_menubutton_parent_index = (int) ui_state_object.get_int_member ("active-submenu");
+        active_menubutton_parent = active_menubutton_parent_index > -1 ?
+            submenus.get (active_menubutton_parent_index) : null;
+        active_menubutton = menubuttons.get (
+            (int) ui_state_object.get_int_member ("active-item")
+        );
+
+        Json.Object countdown_state_object = root_object.get_object_member ("countdown-state");
+
+        Duration duration;
+        if (active_menubutton_parent == null) {
+            duration = new InfiniteDuration ();
+        } else {
+            var duration_quantity = (int) countdown_state_object.get_int_member ("duration");
+            submenus.index_of (active_menubutton_parent) == 0 ?
+                duration = new MinuteDuration (duration_quantity) :
+                duration = new HourDuration (duration_quantity);
+        }
+
+        start_session_with_duration (duration, true);
+        show_notification (
+            "Session resumed",
+            "Your computer will not go to sleep."
+        );
     }
 }
 
