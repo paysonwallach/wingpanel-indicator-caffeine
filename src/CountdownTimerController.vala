@@ -12,7 +12,7 @@ namespace Caffeine {
         public enum State {
             STOPPED,
             ACTIVE,
-            DISABLED
+            INACTIVE
         }
         public State state { get; private set; }
 
@@ -43,7 +43,7 @@ namespace Caffeine {
         protected CancellableTimeout countdown_timeout;
 
         public CountdownTimerController () {
-            state = State.DISABLED;
+            state = State.INACTIVE;
             duration_countdown = new Countdown (duration);
             countdown_timeout = new CancellableTimeout (update_countdown, 1);
 
@@ -92,7 +92,7 @@ namespace Caffeine {
         }
 
         private void on_completion () {
-            state = State.DISABLED;
+            state = State.INACTIVE;
             countdown_timeout.cancel ();
         }
 
