@@ -32,6 +32,7 @@ config_header = configure_file(
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
 
 granite_dep = dependency('granite')
+json_dep = dependency('json-glib-1.0')
 libnotify_dep = dependency('libnotify')
 libwingpanel_dep = dependency('wingpanel-2.0')
 indicators_dir = libwingpanel_dep.get_pkgconfig_variable('indicatorsdir',
@@ -57,6 +58,7 @@ shared_module(meson.project_name(),
               install: true,
               install_dir: indicators_dir
   config_header,
+    json_dep,
 )
 
 subdir('data')
