@@ -65,6 +65,22 @@ namespace Caffeine {
             cancelled ();
         }
 
+        public Json.Object serialize () {
+            var object = new Json.Object ();
+
+            object.set_int_member (
+                "state", (int) state);
+            object.set_int_member (
+                "duration", duration_countdown.get_time_remaining ());
+
+            return object;
+        }
+
+        public void deserialize (Json.Object data) {
+            state = (State) data.get_int_member ("state");
+            duration = (int) data.get_int_member ("duration");
+        }
+
         private void on_activation () {
             duration_countdown.continue ();
             countdown_timeout.start ();
