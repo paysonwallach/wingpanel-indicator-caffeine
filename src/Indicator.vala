@@ -385,7 +385,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         if (event.button == Gdk.BUTTON_MIDDLE) {
             if (enabled) {
                 countdown_timer_controller.cancel ();
-                disable (false);
+                disable ();
             } else {
                 enable ();
                 show_notification (
