@@ -61,7 +61,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         display_widget.button_press_event.connect (on_button_press);
 
-        settings = new Settings ("com.paysonwallach.caffeine");
+        settings = new Settings (Config.APP_ID);
         power_settings = new Settings ("org.gnome.settings-daemon.plugins.power");
         session_settings = new Settings ("org.gnome.desktop.session");
         dpms_settings = new Settings ("io.elementary.dpms");
@@ -74,7 +74,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         settings.bind ("enabled", this, "enabled", SettingsBindFlags.DEFAULT);
 
         construct_menu ();
-        Notify.init ("Caffeine");
+        Notify.init (Config.APP_NAME);
 
         visible = true;
     }
@@ -400,7 +400,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     }
 
     private File get_state_file () {
-        var paths = Granite.Services.Paths.initialize (Constants.APP_ID, Constants.PKGDATADIR);
+        Granite.Services.Paths.initialize (Config.APP_ID, Config.PKGDATADIR);
 
         return File.new_build_filename (
             paths.user_cache_folder ().get_path (), @"last-state-$(Config.DATA_VERSION)")
