@@ -137,11 +137,10 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         var session_cancel_button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 
-        session_cancel_button_box.set_border_width (6);
+        session_cancel_button_box.border_width = 6;
         session_cancel_button_box.pack_end (session_cancel_button);
 
         session_cancel_button.hexpand = false;
-
         session_cancel_button.get_style_context ()
             .add_class ("destructive-action");
         session_cancel_button.clicked.connect (() => {
@@ -162,13 +161,14 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         menu.attach (session_countdown_revealer, 0, 0);
 
         var new_session_label = new Gtk.Label ("Start a New Session");
-        new_session_label.get_style_context ()
-            .add_class (Granite.STYLE_CLASS_H4_LABEL);
+
         new_session_label.halign = Gtk.Align.START;
         new_session_label.hexpand = true;
         new_session_label.margin = 10;
         new_session_label.margin_top = 2;
         new_session_label.margin_bottom = 2;
+        new_session_label.get_style_context ()
+            .add_class (Granite.STYLE_CLASS_H4_LABEL);
 
         menu.attach (new_session_label, 0, 1);
         menu.attach (new Wingpanel.Widgets.Separator (), 0, 2);
@@ -328,11 +328,11 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
     private void disable (bool notify_user = true) {
         // restore settings
-        power_settings.set_string("sleep-inactive-ac-type", sleep_settings_ac);
-        power_settings.set_string("sleep-inactive-battery-type", sleep_settings_bat);
-        power_settings.set_boolean("idle-dim", idle_dim);
-        session_settings.set_uint("idle-delay", session_timeout);
-        dpms_settings.set_int("standby-time", standby_time);
+        power_settings.set_string ("sleep-inactive-ac-type", sleep_settings_ac);
+        power_settings.set_string ("sleep-inactive-battery-type", sleep_settings_bat);
+        power_settings.set_boolean ("idle-dim", idle_dim);
+        session_settings.set_uint ("idle-delay", session_timeout);
+        dpms_settings.set_int ("standby-time", standby_time);
 
         display_widget.icon_name = "caffeine-cup-empty-symbolic";
 
