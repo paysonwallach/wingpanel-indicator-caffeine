@@ -1,7 +1,8 @@
-project('wingpanel-indicator-caffeine',
-        'vala',
-        'c',
-        version : '0.1.0'
+project(
+  'wingpanel-indicator-caffeine',
+  'vala',
+  'c',
+  version : '0.1.0'
 )
 
 app_id = 'com.paysonwallach.caffeine'
@@ -9,15 +10,20 @@ app_name = 'Caffeine'
 
 i18n = import('i18n')
 
-add_project_arguments(['-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
-                       '-w'
-                      ],
-                      language:'c'
+add_project_arguments(
+  [
+    '-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
+    '-w'
+  ],
+  language:'c'
 )
 
 prefix = get_option('prefix')
-libdir = join_paths(prefix, get_option('libdir'))
 pkgdatadir = join_paths(prefix, get_option('datadir'), app_id)
+libdir = join_paths(
+  prefix,
+  get_option('libdir')
+)
 
 conf_data = configuration_data()
 conf_data.set_quoted('APP_ID', app_id)
@@ -29,36 +35,41 @@ config_header = configure_file(
   configuration : conf_data
 )
 
-add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
+add_global_arguments(
+  '-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()),
+  language: 'c'
+)
 
 granite_dep = dependency('granite')
 json_dep = dependency('json-glib-1.0')
 libnotify_dep = dependency('libnotify')
 libwingpanel_dep = dependency('wingpanel-2.0')
-indicators_dir = libwingpanel_dep.get_pkgconfig_variable('indicatorsdir',
-  define_variable: [
+indicators_dir = libwingpanel_dep.get_pkgconfig_variable(
+  'indicatorsdir',
+  define_variable : [
     'libdir',
     libdir
   ]
 )
 
-shared_module(meson.project_name(),
-              'src/Indicator.vala',
-              'src/MenuButton.vala',
-              'src/CancellableTimeout.vala',
-              'src/Countdown.vala',
-              'src/CountdownTimerController.vala',
-              'src/Duration.vala',
-              'src/Utils.vala',
-              dependencies: [
-                granite_dep,
-                libnotify_dep,
-                libwingpanel_dep
-              ],
-              install: true,
-              install_dir: indicators_dir
+shared_module(
+  meson.project_name(),
   config_header,
+  'src/Indicator.vala',
+  'src/MenuButton.vala',
+  'src/CancellableTimeout.vala',
+  'src/Countdown.vala',
+  'src/CountdownTimerController.vala',
+  'src/Duration.vala',
+  'src/Utils.vala',
+  dependencies: [
+    granite_dep,
     json_dep,
+    libnotify_dep,
+    libwingpanel_dep
+  ],
+  install: true,
+  install_dir: indicators_dir
 )
 
 subdir('data')
