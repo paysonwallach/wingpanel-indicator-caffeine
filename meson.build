@@ -4,6 +4,9 @@ project('wingpanel-indicator-caffeine',
         version : '0.1.0'
 )
 
+app_id = 'com.paysonwallach.caffeine'
+app_name = 'Caffeine'
+
 i18n = import('i18n')
 
 add_project_arguments(['-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
@@ -14,8 +17,17 @@ add_project_arguments(['-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
 
 prefix = get_option('prefix')
 libdir = join_paths(prefix, get_option('libdir'))
+pkgdatadir = join_paths(prefix, get_option('datadir'), app_id)
 
-app_id = 'com.paysonwallach.caffeine'
+conf_data = configuration_data()
+conf_data.set_quoted('APP_ID', app_id)
+conf_data.set_quoted('APP_NAME', app_name)
+conf_data.set_quoted('PKGDATADIR', pkgdatadir)
+config_header = configure_file(
+  input : 'config.vala.in',
+  output : 'config.vala',
+  configuration : conf_data
+)
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
 
@@ -44,6 +56,7 @@ shared_module(meson.project_name(),
               ],
               install: true,
               install_dir: indicators_dir
+  config_header,
 )
 
 subdir('data')
