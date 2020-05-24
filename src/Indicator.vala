@@ -183,7 +183,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         foreach (var durations in durations_list) {
             var submenu_index = 0;
             var submenu_container = new Gtk.Grid ();
-            var button = new MenuButton (@"$(durations.unit.to_string ())");
+            var button = new MenuButton (durations.unit.to_string ());
             var revealer = new Gtk.Revealer ();
             var submenu = new Gtk.Grid ();
 
