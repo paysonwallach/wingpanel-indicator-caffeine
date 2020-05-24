@@ -47,7 +47,7 @@ namespace Caffeine {
             duration_countdown = new Countdown (duration);
             countdown_timeout = new CancellableTimeout (update_countdown, 1);
 
-            notify["duration"].connect((s, p) => {
+            notify["duration"].connect ((s, p) => {
                 duration_countdown.set_base_duration (duration);
             });
 
