@@ -305,11 +305,13 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             if (countdown_timer_controller == null)
                 countdown_timer_controller = new CountdownTimerController ();
 
-            countdown_timer_controller.duration = duration.quantity * (resume ? 1 : duration.unit.to_seconds ());
+            countdown_timer_controller.duration = duration.quantity * (
+                resume ? 1 : duration.unit.to_seconds ());
 
             countdown_timer_controller.active_changed.connect (() => {
                 session_countdown_timer_label.set_markup (
-                    @"<small>Time remaining: $(duration.time_remaining_string (countdown_timer_controller.get_time_remaining ()))</small>"
+                    @"<small>Time remaining: $(duration.time_remaining_string (
+                        countdown_timer_controller.get_time_remaining ()))</small>"
                 );
                 save_state ();
             });
@@ -319,7 +321,8 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             countdown_timer_controller.activate ();
 
             session_countdown_timer_label.set_markup (
-                @"<small>Time remaining: $(duration.time_remaining_string (countdown_timer_controller.duration - 1))</small>"
+                @"<small>Time remaining: $(duration.time_remaining_string (
+                    countdown_timer_controller.duration - 1))</small>"
             );
         }
 
