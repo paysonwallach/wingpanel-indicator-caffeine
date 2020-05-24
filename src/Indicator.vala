@@ -361,18 +361,18 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
     private void enable () {
         // store old sleep settings
-        sleep_settings_ac = power_settings.get_string("sleep-inactive-ac-type");
-        sleep_settings_bat = power_settings.get_string("sleep-inactive-battery-type");
-        idle_dim = power_settings.get_boolean("idle-dim");
-        session_timeout = session_settings.get_uint("idle-delay");
-        standby_time = dpms_settings.get_int("standby-time");
+        sleep_settings_ac = power_settings.get_string ("sleep-inactive-ac-type");
+        sleep_settings_bat = power_settings.get_string ("sleep-inactive-battery-type");
+        idle_dim = power_settings.get_boolean ("idle-dim");
+        session_timeout = session_settings.get_uint ("idle-delay");
+        standby_time = dpms_settings.get_int ("standby-time");
 
         // disable sleep settings and session idle
-        power_settings.set_string("sleep-inactive-ac-type", "nothing");
-        power_settings.set_string("sleep-inactive-battery-type", "nothing");
-        power_settings.set_boolean("idle-dim", false);
-        session_settings.set_uint("idle-delay", 0);
-        dpms_settings.set_int("standby-time", 0);
+        power_settings.set_string ("sleep-inactive-ac-type", "nothing");
+        power_settings.set_string ("sleep-inactive-battery-type", "nothing");
+        power_settings.set_boolean ("idle-dim", false);
+        session_settings.set_uint ("idle-delay", 0);
+        dpms_settings.set_int ("standby-time", 0);
 
         display_widget.icon_name = "caffeine-cup-full-symbolic";
 
