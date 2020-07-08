@@ -416,11 +416,8 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     }
 
     private File get_state_file () {
-        Granite.Services.Paths.initialize (Config.APP_ID, Config.PKGDATADIR);
-
-        return File.new_build_filename (
-            Granite.Services.Paths.user_data_folder.get_path (), @"last-state-$(Config.DATA_VERSION)")
-        );
+        return File.new_build_filename (Environment.get_user_data_dir (),
+                                        Config.APP_ID, @"last-state-$(Config.DATA_VERSION)"));
     }
 
     private void save_state () {
