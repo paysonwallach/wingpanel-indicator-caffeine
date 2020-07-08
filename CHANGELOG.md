@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/paysonwallach/wingpanel-indicator-caffeine/compare/v0.2.0...v0.2.1) (2020-07-08)
+
+
+### Bug Fixes
+
+* Remove unmatched parenthesis ([d4a1645](https://github.com/paysonwallach/wingpanel-indicator-caffeine/commit/d4a16450f5b6f6098a73a9c7a94491fc58d7fee6))
+
 ### 0.2.0 (2020-07-08)
 
 

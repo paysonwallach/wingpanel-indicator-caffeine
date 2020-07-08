@@ -1,6 +1,6 @@
 {
   "name": "wingpanel-indicator-caffeine",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Keep your computer awake with ease.",
   "scripts": {
     "build-meta": "node scripts/build.js",
