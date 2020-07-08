@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paysonwallach/wingpanel-indicator-caffeine.git"
+    "url": "https://github.com/paysonwallach/wingpanel-indicator-caffeine.git"
   },
   "author": "Payson Wallach <payson@paysonwallach.com>",
   "license": "GPL-3.0",
@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/paysonwallach/wingpanel-indicator-caffeine#readme",
   "meta": {
-    "name": "Caffeine",
+    "user": "paysonwallach",
+    "title": "Caffeine",
     "license": {
       "name": "GNU General Public License v3.0",
       "url": "https://github.com/paysonwallach/wingpanel-indicator-caffeine/blob/master/LICENSE"
