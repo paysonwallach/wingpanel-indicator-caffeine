@@ -18,5 +18,6 @@ namespace Caffeine {
         public inline static int64 get_monotonic_time_seconds () {
             return get_monotonic_time () / MICROSECONDS_IN_SECONDS;
         }
+
     }
 }

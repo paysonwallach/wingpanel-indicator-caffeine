@@ -107,5 +107,6 @@ namespace Caffeine {
                 active_changed ();
             }
         }
+
     }
 }
