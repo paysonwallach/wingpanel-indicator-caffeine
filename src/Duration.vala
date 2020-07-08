@@ -38,6 +38,7 @@ namespace Caffeine {
                 assert_not_reached ();
             }
         }
+
     }
 
     public abstract class Duration {
@@ -49,6 +50,7 @@ namespace Caffeine {
         public abstract string notification_string ();
 
         public abstract string time_remaining_string (int time_remaining = 0);
+
     }
 
     public abstract class FiniteDuration : Duration {
@@ -63,6 +65,7 @@ namespace Caffeine {
         public override string time_remaining_string (int time_remaining = 0) {
             return Granite.DateTime.seconds_to_time (time_remaining);
         }
+
     }
 
     public class InfiniteDuration : Duration {
@@ -82,6 +85,7 @@ namespace Caffeine {
         public override string time_remaining_string (int time_remaining = 0) {
             return "This session is not scheduled to end.";
         }
+
     }
 
     public class MinuteDuration : FiniteDuration {
@@ -93,6 +97,7 @@ namespace Caffeine {
         public override string to_string () {
             return @"$(quantity.to_string ()) $(unit.to_string ().down ())";
         }
+
     }
 
     public class HourDuration : FiniteDuration {
@@ -104,5 +109,6 @@ namespace Caffeine {
         public override string to_string () {
             return (ngettext ("%u hour", "%u hours", quantity)).printf (quantity);
         }
+
     }
 }

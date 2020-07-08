@@ -2,7 +2,7 @@
     <h1>Caffeine</h1>
     <p>Keep your computer awake with ease.</p>
   <a href="https://github.com/paysonwallach/wingpanel-indicator-caffeine.git/releases/latest">
-    <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-red.svg?cacheSeconds=2592000&style=flat-square" />
+    <img alt="Version 0.2.0" src="https://img.shields.io/badge/version-0.2.0-red.svg?cacheSeconds=2592000&style=flat-square" />
   </a>
 
   <a href="https://github.com/paysonwallach/wingpanel-indicator-caffeine/blob/master/LICENSE" target="\_blank">

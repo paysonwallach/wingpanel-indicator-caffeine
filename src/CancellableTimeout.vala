@@ -60,5 +60,6 @@ namespace Caffeine {
         public bool is_running () {
             return source_id != 0;
         }
+
     }
 }
