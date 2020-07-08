@@ -15,27 +15,27 @@ namespace Caffeine {
 
         public int? to_seconds () {
             switch (this) {
-                case MINUTES:
-                    return 60;
-                case HOURS:
-                    return 60 * MINUTES.to_seconds ();
-                case INDEFINITE:
-                    return null;
-                default:
-                    assert_not_reached ();
+            case MINUTES:
+                return 60;
+            case HOURS:
+                return 60 * MINUTES.to_seconds ();
+            case INDEFINITE:
+                return null;
+            default:
+                assert_not_reached ();
             }
         }
 
         public string to_string () {
             switch (this) {
-                case MINUTES:
-                    return "Minutes";
-                case HOURS:
-                    return "Hours";
-                case INDEFINITE:
-                    return "Indefinite";
-                default:
-                    assert_not_reached ();
+            case MINUTES:
+                return "Minutes";
+            case HOURS:
+                return "Hours";
+            case INDEFINITE:
+                return "Indefinite";
+            default:
+                assert_not_reached ();
             }
         }
     }
