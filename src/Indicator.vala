@@ -453,7 +453,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
     private File get_state_file () {
         return File.new_build_filename (Environment.get_user_data_dir (),
-                                        Config.APP_ID, @"last-state-$(Config.DATA_VERSION)"));
+                                        Config.APP_ID, @"last-state-$(Config.DATA_VERSION)");
     }
 
     private void save_state () {
