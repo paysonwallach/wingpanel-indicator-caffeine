@@ -1,0 +1,44 @@
+{
+  "name": "wingpanel-indicator-caffeine",
+  "version": "0.1.0",
+  "description": "Keep your computer awake with ease.",
+  "scripts": {
+    "build-meta": "node scripts/build.js",
+    "lint": "find src/ -name '*.vala' -exec uncrustify -c uncrustify.cfg --replace {} \\;",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paysonwallach/wingpanel-indicator-caffeine.git"
+  },
+  "author": "Payson Wallach <payson@paysonwallach.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/paysonwallach/wingpanel-indicator-caffeine/issues"
+  },
+  "homepage": "https://github.com/paysonwallach/wingpanel-indicator-caffeine#readme",
+  "meta": {
+    "name": "Caffeine",
+    "license": {
+      "name": "GNU General Public License v3.0",
+      "url": "https://github.com/paysonwallach/wingpanel-indicator-caffeine/blob/master/LICENSE"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
+    "husky": "^4.2.5",
+    "nunjucks": "^3.2.1",
+    "standard-version": "^8.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "npm run build-meta"
+    }
+  }
+}
