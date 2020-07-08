@@ -1,0 +1,5 @@
+option('enable-xscreensaver-plugin',
+  type: 'boolean',
+  value: true,
+  description: 'Build plugin for XScreenSaver support'
+)
