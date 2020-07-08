@@ -43,6 +43,9 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     private Settings power_settings;
     private Settings session_settings;
 
+    private Peas.ExtensionSet extension_set;
+    private Peas.Engine peas_engine;
+
     public string sleep_settings_ac { get; set; }
     public string sleep_settings_bat { get; set; }
     public bool idle_dim { get; set; }
@@ -62,6 +65,31 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             "caffeine-cup-empty-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
 
         display_widget.button_press_event.connect (on_button_press);
+
+        peas_engine = Peas.Engine.get_default ();
+
+        peas_engine.add_search_path (Config.PKGPLUGINS_LIB_DIR, Config.PKGPLUGINS_DATA_DIR);
+
+        string user_plugins_dir = Path.build_filename (
+            Environment.get_user_data_dir (), Config.APP_ID, "plugins");
+
+        peas_engine.add_search_path (user_plugins_dir, user_plugins_dir);
+        peas_engine.enable_loader ("python3");
+
+        extension_set = new Peas.ExtensionSet (
+            peas_engine, typeof (Peas.Activatable), "object", this);
+
+        extension_set.extension_added.connect ((info, exten) => {
+            if (enabled)
+                ((Peas.Activatable)exten).activate ();
+        });
+        extension_set.extension_removed.connect ((info, exten) => {
+            if (enabled)
+                ((Peas.Activatable)exten).deactivate ();
+        });
+
+        foreach (var plugin in peas_engine.get_plugin_list ())
+            peas_engine.try_load_plugin (plugin);
 
         settings = new Settings (Config.APP_ID);
         power_settings = new Settings ("org.gnome.settings-daemon.plugins.power");
@@ -337,6 +365,10 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         session_settings.set_uint ("idle-delay", session_timeout);
         dpms_settings.set_int ("standby-time", standby_time);
 
+        extension_set.@foreach ((@set, info, extension) => {
+            ((Peas.Activatable)extension).deactivate ();
+        });
+
         display_widget.icon_name = "caffeine-cup-empty-symbolic";
 
         session_countdown_revealer.set_reveal_child (false);
@@ -376,6 +408,10 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         power_settings.set_boolean ("idle-dim", false);
         session_settings.set_uint ("idle-delay", 0);
         dpms_settings.set_int ("standby-time", 0);
+
+        extension_set.@foreach ((@set, info, extension) => {
+            ((Peas.Activatable)extension).activate ();
+        });
 
         display_widget.icon_name = "caffeine-cup-full-symbolic";
 
