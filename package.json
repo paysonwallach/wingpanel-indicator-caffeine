@@ -22,7 +22,8 @@
     "license": {
       "name": "GNU General Public License v3.0",
       "url": "https://github.com/paysonwallach/wingpanel-indicator-caffeine/blob/master/LICENSE"
-    }
+    },
+    "codeOfConductURL": "https://github.com/paysonwallach/wingpanel-indicator-caffeine/blob/master/CODE_OF_CONDUCT.md"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
