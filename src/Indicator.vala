@@ -53,7 +53,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     public Indicator () {
         Object (
             code_name: "caffeine-indicator"
-        );
+            );
     }
 
     construct {
@@ -97,15 +97,16 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     public override void opened () {
         if (active_menubutton_parent != null)
             active_menubutton_parent.set_reveal_child (true);
-            opened_submenu = active_menubutton_parent;
+        opened_submenu = active_menubutton_parent;
     }
 
     public override void closed () {
         if (active_menubutton_parent != null)
             active_menubutton_parent.set_reveal_child (false);
+
         if (opened_submenu != null)
             opened_submenu.set_reveal_child (false);
-            opened_submenu = null;
+        opened_submenu = null;
     }
 
     private void construct_menu () {
@@ -291,7 +292,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         show_notification (
             "Caffeine enabled",
             duration.notification_string ()
-        );
+            );
     }
 
     private void start_session_with_duration (Duration duration, bool resume = false) {
@@ -299,8 +300,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         if (duration.unit == Units.INDEFINITE) {
             session_countdown_timer_label.set_markup (
-                @"<small>$(duration.time_remaining_string ())</small>"
-            );
+                @"<small>$(duration.time_remaining_string ())</small>");
         } else {
             if (countdown_timer_controller == null)
                 countdown_timer_controller = new CountdownTimerController ();
@@ -312,7 +312,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
                 session_countdown_timer_label.set_markup (
                     @"<small>Time remaining: $(duration.time_remaining_string (
                         countdown_timer_controller.get_time_remaining ()))</small>"
-                );
+                    );
                 save_state ();
             });
             countdown_timer_controller.completed.connect (() => {
@@ -323,7 +323,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             session_countdown_timer_label.set_markup (
                 @"<small>Time remaining: $(duration.time_remaining_string (
                     countdown_timer_controller.duration - 1))</small>"
-            );
+                );
         }
 
         session_countdown_revealer.set_reveal_child (true);
@@ -355,7 +355,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             show_notification (
                 "Caffeine disabled",
                 "Your computer will resume sleeping normally."
-            );
+                );
 
         enabled = false;
 
@@ -394,7 +394,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
                 show_notification (
                     "Caffeine enabled",
                     "Your computer will not go to sleep."
-                );
+                    );
             }
 
             return Gdk.EVENT_STOP;
@@ -440,20 +440,20 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             ui_state_object.set_int_member (
                 "active-submenu",
                 active_menubutton_parent == null ? -1 : submenus.index_of (active_menubutton_parent)
-            );
+                );
             ui_state_object.set_int_member (
                 "active-item",
                 active_menubutton == null ? -1 : menubuttons.index_of (active_menubutton)
-            );
+                );
 
             root_object.set_object_member (
                 "ui-state",
                 ui_state_object
-            );
+                );
             root_object.set_object_member (
                 "countdown-state",
                 countdown_timer_controller.serialize ()
-            );
+                );
         }
 
         try {
@@ -496,10 +496,9 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
 
         var active_menubutton_parent_index = (int) ui_state_object.get_int_member ("active-submenu");
         active_menubutton_parent = active_menubutton_parent_index > -1 ?
-            submenus.get (active_menubutton_parent_index) : null;
+                                   submenus.get (active_menubutton_parent_index) : null;
         active_menubutton = menubuttons.get (
-            (int) ui_state_object.get_int_member ("active-item")
-        );
+            (int) ui_state_object.get_int_member ("active-item"));
 
         Json.Object countdown_state_object = root_object.get_object_member ("countdown-state");
 
@@ -509,15 +508,15 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
         } else {
             var duration_quantity = (int) countdown_state_object.get_int_member ("duration");
             submenus.index_of (active_menubutton_parent) == 0 ?
-                duration = new MinuteDuration (duration_quantity) :
-                duration = new HourDuration (duration_quantity);
+            duration = new MinuteDuration (duration_quantity) :
+                       duration = new HourDuration (duration_quantity);
         }
 
         start_session_with_duration (duration, true);
         show_notification (
             "Session resumed",
             "Your computer will not go to sleep."
-        );
+            );
     }
 }
 
