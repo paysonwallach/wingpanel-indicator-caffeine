@@ -16,7 +16,7 @@ vapi_dir = join_paths(meson.source_root(), 'vapi')
 
 add_project_arguments(
   [
-    '-DGETTEXT_PACKAGE="'+meson.project_name()+'"',
+    '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
     '-w'
   ],
   language:'c'
@@ -54,7 +54,7 @@ add_global_arguments(
 )
 
 granite_dep = dependency('granite')
-json_dep = dependency('json-glib-1.0')
+glib_json_dep = dependency('json-glib-1.0')
 libnotify_dep = dependency('libnotify')
 libpeas_dep = dependency('libpeas-1.0', version: '>=1.1.0')
 libpeas_gtk_dep = dependency('libpeas-gtk-1.0', version: '>=1.1.0')
@@ -79,7 +79,7 @@ shared_module(
   dependencies: [
     config_dep,
     granite_dep,
-    json_dep,
+    glib_json_dep,
     libnotify_dep,
     libwingpanel_dep,
     libpeas_dep,
