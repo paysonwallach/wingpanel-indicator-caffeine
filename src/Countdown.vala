@@ -43,5 +43,6 @@ namespace Caffeine {
         public bool is_finished () {
             return get_time_remaining () == 0;
         }
+
     }
 }

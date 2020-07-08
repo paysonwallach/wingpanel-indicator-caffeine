@@ -16,6 +16,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             this.quantities = quantities;
             this.unit = unit;
         }
+
     }
 
     private Durations minute_durations = Durations (
@@ -551,6 +552,7 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
             "Your computer will not go to sleep."
             );
     }
+
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
