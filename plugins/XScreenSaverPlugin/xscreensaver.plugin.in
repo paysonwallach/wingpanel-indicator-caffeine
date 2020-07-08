@@ -1,0 +1,6 @@
+[Plugin]
+Module=xscreensaver.so
+Name=XScreenSaver
+Description=XScreenSaver support for Caffeine.
+Authors=Payson Wallach <payson@paysonwallach.com>
+Copyright=Copyright © 2020 Payson Wallach
