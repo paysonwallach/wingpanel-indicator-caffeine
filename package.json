@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "wingpanel-indicator-caffeine",
   "description": "Keep your computer awake with ease.",
   "license": "GPL-3.0",
