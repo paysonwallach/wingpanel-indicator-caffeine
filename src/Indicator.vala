@@ -453,8 +453,18 @@ public class Caffeine.Indicator : Wingpanel.Indicator {
     }
 
     private File get_state_file () {
-        return File.new_build_filename (Environment.get_user_data_dir (),
-                                        Config.APP_ID, @"last-state-$(Config.DATA_VERSION)");
+        var data_dir = File.new_build_filename (Environment.get_user_data_dir (),
+                                        Config.APP_ID);
+        var state_file = data_dir.resolve_relative_path (@"last-state-$(Config.DATA_VERSION)");
+
+        if (!data_dir.query_exists ())
+            try {
+                data_dir.make_directory_with_parents ();
+            } catch (Error e) {
+                warning (e.message);
+            }
+
+        return state_file;
     }
 
     private void save_state () {
